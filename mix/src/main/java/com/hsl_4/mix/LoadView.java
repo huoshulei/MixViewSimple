@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 class LoadView implements ItemViewProvider<Loading, LoadView.LoadViewHolder> {
     @Override
     public LoadViewHolder onCreateViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        OWLoadingView view = new OWLoadingView(parent.getContext());
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 60));
-        return new LoadViewHolder(view);
+        return new LoadViewHolder(inflater.inflate(R.layout.loading_view, parent, false));
     }
 
     @Override

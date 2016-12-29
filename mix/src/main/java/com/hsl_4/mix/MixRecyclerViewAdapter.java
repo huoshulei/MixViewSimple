@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.*;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -31,6 +32,7 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List header;
     private int footerCount = 0;
     private List                 footer;
+    private Object               loadView;
     private Map<Object, Integer> spanMap;
     private LayoutManager        manager;
     private boolean              loading;
@@ -148,26 +150,26 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
 
-    public void addData(List items) {
-        int position = getItemCount() - footerCount;
+    public void addData(List<?> items) {
+        int position = getItemCount() - footerCount - isLoading();
         addData(items, position);
     }
 
     public void addData(Object item) {
-        int position = getItemCount() - footerCount;
+        int position = getItemCount() - footerCount - isLoading();
         addData(item, position);
     }
 
-    public void addData(List items, int position) {
+    public void addData(List<?> items, int position) {
         this.items.addAll(position, items);
-        int itemCount = getItemCount();
+        int itemCount = getItemCount() - position;
         notifyItemRangeChanged(position, itemCount);
     }
 
     public void addData(Object item, int position) {
         this.items.add(position, item);
         int itemCount = getItemCount();
-        notifyItemRangeChanged(position, itemCount);
+        notifyItemRangeChanged(position, itemCount - position);
     }
 
     public void remove(Object item) {
@@ -184,8 +186,9 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void clear() {
         this.items.clear();
         this.spanMap.clear();
-        items.add(header);
-        items.add(footer);
+        items.addAll(header);
+        items.addAll(footer);
+        if (loadView != null) items.add(loadView);
         notifyDataSetChanged();
     }
 
@@ -203,8 +206,11 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void setLoadView(Object loadView) {
-        addFooter(loadView);
-        if (loading) remove(getItemCount());
+        if (this.loadView != null)
+            items.remove(this.loadView);
+        items.add(loadView);
+        this.loadView = loadView;
+//        if (loading) remove(getItemCount());
         loading = true;
     }
 
@@ -213,7 +219,7 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void addSpanItem(Object item, int span) {
-        addSpanItem(item, span, getItemCount());
+        addSpanItem(item, span, getItemCount() - footerCount-isLoading());
     }
 
     public void addSpanItem(Object item, int span, int position) {
@@ -228,6 +234,7 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (manager instanceof StaggeredGridLayoutManager
                 && span != ((StaggeredGridLayoutManager) manager).getSpanCount())
             throw new RuntimeException("瀑布流暂不支持此种布局格式");
+
         spanMap.put(items.get(position), span);
     }
 

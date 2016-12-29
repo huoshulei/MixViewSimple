@@ -1,6 +1,7 @@
 package com.hsl_4.mixviewsimple;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,15 @@ public class Simple implements ItemViewProvider<String, Simple.Holder> {
         TextView itemView = new TextView(parent.getContext());
         itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+        itemView.setPadding(20, 20, 20, 20);
         itemView.setBackgroundColor(0x555555);
+        itemView.setGravity(Gravity.CENTER);
         return new Holder(itemView);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, String item) {
-        ((TextView) holder.itemView).setText(item+"simple");
+        ((TextView) holder.itemView).setText(item + "simple");
     }
 
     class Holder extends RecyclerView.ViewHolder {

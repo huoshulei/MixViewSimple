@@ -1,6 +1,7 @@
 package com.hsl_4.mixviewsimple;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ public class Footer implements ItemViewProvider<FooterBean, Footer.Holder> {
         itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         itemView.setBackgroundColor(0x555555);
+        itemView.setPadding(200, 200, 200, 200);
+        itemView.setGravity(Gravity.CENTER);
         return new Holder(itemView);
     }
 

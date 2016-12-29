@@ -38,7 +38,7 @@ public class StaggeredActivity extends AppCompatActivity {
             @Override
             public void onLoadMore() {
                 list.clear();
-                adapter.addData("继续插", 4);
+                adapter.addSpanItem("继续插", 4);
                 for (int i = 0; i < 10; i++) {
                     list.add("加载" + i);
                 }
@@ -48,8 +48,8 @@ public class StaggeredActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             list.add("首次" + i);
         }
-        adapter.addData("插一下", 4);
         adapter.setData(list);
+        adapter.addSpanItem("插一下", 4);
     }
 
 }

@@ -24,7 +24,7 @@ public class LinearActivity extends AppCompatActivity {
         setContentView(R.layout.activity_liner);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,5));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MixRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         adapter.inject(String.class, new Simple());
@@ -37,18 +37,18 @@ public class LinearActivity extends AppCompatActivity {
             @Override
             public void onLoadMore() {
                 list.clear();
-                adapter.addSpanItem("继续插",2);
+                adapter.addData("继续插");
                 for (int i = 0; i < 10; i++) {
                     list.add("加载" + i);
                 }
                 adapter.addData(list);
-                adapter.addSpanItem("继续插",3);
+                adapter.addData("继续插");
             }
         });
         for (int i = 0; i < 20; i++) {
             list.add("首次" + i);
         }
-        adapter.addData("插一下",4);
         adapter.setData(list);
+        adapter.addData("插一下");
     }
 }
