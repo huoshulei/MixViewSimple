@@ -19,7 +19,7 @@ import java.util.Map;
  * 时 间:2016/12/28 10:02.
  */
 
-public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder> implements TypePool {
     private List                       items;
     private List                       footers;
     private List                       headers;
@@ -64,7 +64,7 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onViewAttachedToWindow(ViewHolder holder) {
+    public void onViewAttachedToWindow(BaseViewHolder holder) {
         if (manager instanceof StaggeredGridLayoutManager) {
             ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
             if (params != null && params instanceof StaggeredGridLayoutManager.LayoutParams) {
@@ -84,15 +84,15 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return typePool.getProvider(viewType).onCreateViewHolder(parent, inflater);
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return getProvider(viewType).onCreateViewHolder(parent, inflater);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         Object item = items.get(position);
-        typePool.getProvider(holder.getItemViewType()).onBindViewHolder(holder, item);
+        getProvider(holder.getItemViewType()).onBindViewHolder(holder, item);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (position < getDataCount() + getHeaderCount() + getFooterCount() + getLoadCount()) {
             index = position - getDataCount() - getHeaderCount() - getFooterCount();
         } else throw new IndexOutOfBoundsException("在这儿呢" + this.getClass().getName());
-        return getItemType(getItemClass(items.get(index)));
+        return indexOf(getItemClass(items.get(index)));
     }
 
     /**
@@ -159,7 +159,8 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     /**
      * 视图类型分发
      */
-    private int getItemType(@NonNull Class<?> clazz) {
+    @Override
+    public int indexOf(@NonNull Class<?> clazz) {
         int index = typePool.indexOf(clazz);
         if (index >= 0) return index;
         throw new RuntimeException("未注入 {className}.class!"
@@ -172,10 +173,20 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
      * @param clazz    item
      * @param provider view holder
      */
-
-    public MixRecyclerViewAdapter inject(@NonNull Class<?> clazz, @NonNull ItemViewProvider provider) {
+    @Override
+    public void inject(@NonNull Class<?> clazz, @NonNull ItemViewProvider provider) {
         typePool.inject(clazz, provider);
-        return this;
+    }
+
+
+    @Override
+    public ItemViewProvider getProvider(int index) {
+        return typePool.getProvider(index);
+    }
+
+    @Override
+    public ItemViewProvider getProvider(Class<?> clazz) {
+        return typePool.getProvider(clazz);
     }
 
 

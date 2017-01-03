@@ -9,21 +9,16 @@ import android.view.ViewGroup;
  * Created by hsl_4 on 2016/12/28.
  */
 
-class LoadView implements ItemViewProvider<Loading, LoadView.LoadViewHolder> {
+class LoadView implements ItemViewProvider<Loading, BaseViewHolder> {
     @Override
-    public LoadViewHolder onCreateViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        return new LoadViewHolder(inflater.inflate(R.layout.loading_view, parent, false));
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, LayoutInflater inflater) {
+        return BaseViewHolder.onCreateLoadView(parent);
     }
 
     @Override
-    public void onBindViewHolder(LoadViewHolder holder, Loading item) {
+    public void onBindViewHolder(BaseViewHolder holder, Loading item) {
 
     }
 
-    class LoadViewHolder extends RecyclerView.ViewHolder {
 
-        LoadViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }
