@@ -7,33 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hsl_4.mix.BaseViewHolder;
 import com.hsl_4.mix.ItemViewProvider;
 
 /**
  * Created by hsl_4 on 2016/12/29.
  */
 
-public class Simple implements ItemViewProvider<String, Simple.Holder> {
+public class Simple implements ItemViewProvider<String, BaseViewHolder> {
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, LayoutInflater inflater) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, LayoutInflater inflater) {
         TextView itemView = new TextView(parent.getContext());
         itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         itemView.setPadding(20, 20, 20, 20);
         itemView.setBackgroundColor(0x555555);
         itemView.setGravity(Gravity.CENTER);
-        return new Holder(itemView);
+        return BaseViewHolder.onCreate(itemView);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, String item) {
+    public void onBindViewHolder(BaseViewHolder holder, String item) {
         ((TextView) holder.itemView).setText(item + "simple");
     }
 
-    class Holder extends RecyclerView.ViewHolder {
-
-        public Holder(View itemView) {
-            super(itemView);
-        }
-    }
 }

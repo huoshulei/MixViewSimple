@@ -10,7 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
  * 时 间:2016/12/28 13:50.
  */
 
-public class OnScrollLoad extends OnScrollListener {
+class OnScrollLoadListener extends OnScrollListener {
     private OnLoadMoreListener onLoadMoreListener;
 
     private int     lastPosition;
@@ -18,7 +18,7 @@ public class OnScrollLoad extends OnScrollListener {
     private boolean isLoading;
     private boolean isEnabled;
 
-    OnScrollLoad(OnLoadMoreListener onLoadMoreListener) {
+    OnScrollLoadListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
         isLoading = true;
     }

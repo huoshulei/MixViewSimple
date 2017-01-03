@@ -26,15 +26,13 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
     private TypePool                   typePool;
     private Context                    mContext;
     private LayoutInflater             inflater;
-    //    private OnLoadMoreListener onLoadMoreListener;
     private RecyclerView               recyclerView;
-    private OnScrollLoad               onScrollListener;
+    private OnScrollLoadListener       onScrollListener;
     private Object                     loadView;
     private Map<Integer, Integer>      spanMap;
     private LayoutManager              manager;
     private boolean                    loading;
     private Function<Object, Class<?>> itemTransformation;
-//    private Function<Class<?>, Integer> itemViewTypeDistribute;
 
     public MixRecyclerViewAdapter() {
         this(new ArrayList());
@@ -152,9 +150,6 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
         return itemTransformation.apply(item);
     }
 
-//    public void replaceItemViewTypeDistribute(Function<Class<?>, Integer> itemViewTypeDistribute) {
-//        this.itemViewTypeDistribute = itemViewTypeDistribute;
-//    }
 
     /**
      * 视图类型分发
@@ -197,8 +192,12 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
         if (recyclerView == null) throw new RuntimeException("先调用setAdapter()方法 然后添加滚动监听");
         inject(Loading.class, new LoadView());
         setLoadView(new Loading());
-        onScrollListener = new OnScrollLoad(listener);
+        if (onScrollListener == null) onScrollListener = new OnScrollLoadListener(listener);
         recyclerView.setOnScrollListener(onScrollListener);
+    }
+
+    public void openLoadMore(OnScrollLoadListener onScrollLoadListener) {
+
     }
 
     public void setData(List items) {
