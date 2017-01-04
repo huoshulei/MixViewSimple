@@ -32,14 +32,10 @@ import static android.view.View.OnLongClickListener;
 import static android.view.View.VISIBLE;
 
 /**
- * 项目名称:  MSHB
- * 类描述:
- * 创建人:    ICOGN
+ *
+ * 创建人:    霍述雷
  * 创建时间:  2016/11/1 9:29
- * 修改人:    ICOGN
- * 修改时间:  2016/11/1 9:29
- * 备注:
- * 版本:
+ *
  */
 
 public class BaseViewHolder extends RecyclerView.ViewHolder {

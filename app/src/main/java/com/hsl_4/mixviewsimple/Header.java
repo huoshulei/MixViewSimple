@@ -11,7 +11,8 @@ import com.hsl_4.mix.BaseViewHolder;
 import com.hsl_4.mix.ItemViewProvider;
 
 /**
- * Created by hsl_4 on 2016/12/29.
+ * 创建人: 霍述雷
+ * 时 间:2016/12/29 8:50.
  */
 
 public class Header implements ItemViewProvider<HeaderBean, BaseViewHolder> {

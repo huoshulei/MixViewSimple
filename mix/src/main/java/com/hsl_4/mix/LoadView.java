@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by hsl_4 on 2016/12/28.
+ * 创建人: 霍述雷
+ * 时 间:2016/12/28 8:48.
  */
 
 class LoadView implements ItemViewProvider<Loading, BaseViewHolder> {

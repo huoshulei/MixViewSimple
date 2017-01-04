@@ -1,7 +1,8 @@
 package com.hsl_4.mixviewsimple;
 
 /**
- * Created by hsl_4 on 2016/12/29.
+ * 创建人: 霍述雷
+ * 时 间:2016/12/29 8:50.
  */
 
 public class FooterBean {

@@ -1,7 +1,8 @@
 package com.hsl_4.mix;
 
 /**
- * Created by hsl_4 on 2017/1/3.
+ * 创建人: 霍述雷
+ * 时 间:2017/1/3 8:48.
  */
 @FunctionalInterface
 public interface Function<T, R> {
