@@ -89,7 +89,20 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        Object item = items.get(position);
+        Object item;
+        int    index;
+        if (position < getHeaderCount()) {
+            index = position;
+            item = headers.get(index);
+        } else if (position < getHeaderCount() + getDataCount()) {
+            index = position - getHeaderCount();
+            item = items.get(index);
+        } else if (position < getHeaderCount() + getDataCount() + getFooterCount()) {
+            index = position - getHeaderCount() - getDataCount();
+            item = footers.get(index);
+        } else if (position < getDataCount() + getHeaderCount() + getFooterCount() + getLoadCount()) {
+            item = loadView;
+        } else throw new IndexOutOfBoundsException("在这儿呢" + this.getClass().getName());
         getProvider(holder.getItemViewType()).onBindViewHolder(holder, item);
     }
 
@@ -103,11 +116,11 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public int getHeaderCount() {
-        return items.size();
+        return headers.size();
     }
 
     public int getFooterCount() {
-        return items.size();
+        return footers.size();
     }
 
     public int getLoadCount() {
@@ -119,15 +132,21 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
         int index;
         if (position < getHeaderCount()) {
             index = position;
-        } else if (position < getHeaderCount() + getDataCount()) {
+            return indexOf(getItemClass(headers.get(index)));
+        }
+        if (position < getHeaderCount() + getDataCount()) {
             index = position - getHeaderCount();
-        } else if (position < getHeaderCount() + getDataCount() + getFooterCount()) {
+            return indexOf(getItemClass(items.get(index)));
+        }
+        if (position < getHeaderCount() + getDataCount() + getFooterCount()) {
             index = position - getHeaderCount() - getDataCount();
+            return indexOf(getItemClass(footers.get(index)));
         }
         if (position < getDataCount() + getHeaderCount() + getFooterCount() + getLoadCount()) {
-            index = position - getDataCount() - getHeaderCount() - getFooterCount();
+//            index = position - getDataCount() - getHeaderCount() - getFooterCount();
+            return indexOf(getItemClass(loadView));
         } else throw new IndexOutOfBoundsException("在这儿呢" + this.getClass().getName());
-        return indexOf(getItemClass(items.get(index)));
+//        return indexOf(getItemClass(items.get(index)));
     }
 
     /**

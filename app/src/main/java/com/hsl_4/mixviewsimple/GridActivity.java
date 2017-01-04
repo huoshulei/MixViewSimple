@@ -30,8 +30,8 @@ public class GridActivity extends AppCompatActivity {
         adapter.inject(String.class, new Simple());
         adapter.inject(HeaderBean.class, new Header());
         adapter.inject(FooterBean.class, new Footer());
-        adapter.addHeader(new HeaderBean("头"));
-        adapter.addFooter(new FooterBean("低布局"));
+        adapter.addHeader(new HeaderBean("头布局"));
+        adapter.addFooter(new FooterBean("底布局"));
         list = new ArrayList<>();
         adapter.openLoadMore(new OnLoadMoreListener() {
             @Override
@@ -46,9 +46,9 @@ public class GridActivity extends AppCompatActivity {
             }
         });
         for (int i = 0; i < 20; i++) {
-            list.add("首次" + i);
+            list.add("第一次" + i);
         }
         adapter.setData(list);
-        adapter.addSpanItem("插一下2",2);
+        adapter.addSpanItem("查一下2",2);
     }
 }
