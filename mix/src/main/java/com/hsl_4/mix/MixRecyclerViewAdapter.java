@@ -143,10 +143,8 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
             return indexOf(getItemClass(footers.get(index)));
         }
         if (position < getDataCount() + getHeaderCount() + getFooterCount() + getLoadCount()) {
-//            index = position - getDataCount() - getHeaderCount() - getFooterCount();
             return indexOf(getItemClass(loadView));
         } else throw new IndexOutOfBoundsException("在这儿呢" + this.getClass().getName());
-//        return indexOf(getItemClass(items.get(index)));
     }
 
     /**
@@ -215,9 +213,6 @@ public class MixRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>
         recyclerView.setOnScrollListener(onScrollListener);
     }
 
-    public void openLoadMore(OnScrollLoadListener onScrollLoadListener) {
-
-    }
 
     public void setData(List items) {
         clear();
